@@ -4,13 +4,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-
+const path = require('path')
 // .....................................................................
 // main()
 // .....................................................................
 function main() {
     // creo el servidor
     var servidorExpress = express()
+    servidorExpress.use(express.static(path.join(__dirname, '../ux')))
     // para poder acceder a la carga de la petición http, asumiendo que es JSON
     servidorExpress.use(express.json())
     // cargo las reglas REST

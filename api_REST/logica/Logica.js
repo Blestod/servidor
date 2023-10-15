@@ -89,13 +89,18 @@ module.exports = class Logica {
     } // ()
 
     buscarUltimaMedicion() {
-        var textoSQL = "SELECT * FROM Medicion ORDER BY idMedicion DESC LIMIT 1;";
         return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL, "",
-                (err, res) => {
-                    (err ? rechazar(err) : resolver(res))
-                })
-        })
+            const textoSQL = "SELECT * FROM Medicion ORDER BY idMedicion DESC LIMIT 1;";
+    
+            this.laConexion.get(textoSQL, (err, row) => {
+                if (err) {
+                    rechazar(err);
+                } else {
+                    resolver(row);
+                }
+            });
+        });
+    
     } // ()
     // .................................................................
     // cerrar() -->

@@ -72,18 +72,20 @@ module.exports.cargar = function (servidorExpress, laLogica) {
             
 
 
-        }) // get /dividir
+        })
 
-        servidorExpress.get(
-            '/baja',
-            function (peticion, respuesta) {
-                console.log(" * GET /baja ")
-                let resultado = laLogica.buscarMedicionConID("1")
-                console.log(resultado)
-                respuesta.send(resultado)
-            }) 
+        servidorExpress.get('/baja', async function (peticion, respuesta) {
+            console.log(" * GET /baja");
+            try {
+                const resultado = await laLogica.buscarUltimaMedicion();
+                console.log(resultado);
+                respuesta.send(resultado);
+            } catch (error) {
+                console.error("Error:", error);
+                respuesta.status(500).send("Error interno del servidor");
+            }
+        });
 } // ()
-// .....................................................................
 // .....................................................................
 // .....................................................................
 // .....................................................................
